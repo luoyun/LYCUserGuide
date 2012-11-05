@@ -13,4 +13,4 @@ LuoYunCloud 用户手册
 
 3. 进入 LYCUserGuide 目录，发布 html 格式：
 
-    publican build --formats html --lang zh-CN 
+    publican build --formats html --lang zh-CN --common_content=Common_Content/
