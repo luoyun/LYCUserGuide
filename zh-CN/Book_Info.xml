@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE bookinfo PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "LuoYunCloud_User_Guide.ent">
+%BOOK_ENTITIES;
+]>
+<bookinfo id="book-LuoYunCloud_User_Guide-LuoYunCloud_User_Guide">
+	<title>LuoYunCloud 用户手册</title>
+	<subtitle>本手册包含 LuoYunCloud 的使用、管理、常见问题等内容。</subtitle>
+	<productname>LuoYunCloud</productname>
+	<productnumber>0.5</productnumber>
+	<edition>0</edition>
+	<pubsnumber>0</pubsnumber>
+	<abstract>
+		<para>
+		      LuoYunCloud 是由落云科技开发的新型云计算平台软件，可以用来部署 IaaS，SaaS， PaaS 等多种不同功能的云计算平台。本手册包含 LuoYunCloud 的使用、管理、常见问题等内容。	
+		</para>
+	</abstract>
+	<corpauthor>
+		<inlinemediaobject>
+			<imageobject>
+				<imagedata fileref="images/luoyun-logo96.png" format="PNG" />
+			</imageobject>
+		</inlinemediaobject>
+	</corpauthor>
+	<xi:include href="Common_Content/Legal_Notice.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="Author_Group.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+</bookinfo>
+
