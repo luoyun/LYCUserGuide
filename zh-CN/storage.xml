@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "LuoYunCloud_UserGuide.ent">
+%BOOK_ENTITIES;
+]>
+<chapter id="chap-storage">
+	<title>使用附加存储</title>
+	<para>
+	  LuoYunCloud 的虚拟机配置中,　用户可以设置自己的第二块硬盘大小.按照如下方式使用.
+	</para>
+
+	<procedure>
+	  <title>LuoYunCloud 使用附加存储</title>
+	  <step>
+	    <title>打开虚拟机,准备配置存储</title>
+	    <mediaobject>
+	      <imageobject><imagedata fileref="images/storage/config-open.png" format="PNG" /></imageobject>
+	      <textobject><phrase>alternate text goes here</phrase></textobject>
+	    </mediaobject>
+	  </step>
+
+	  <step>
+	    <title>编辑存储配置</title>
+	    <mediaobject>
+	      <imageobject><imagedata fileref="images/storage/config-edit.png" format="PNG" /></imageobject>
+	      <textobject><phrase>alternate text goes here</phrase></textobject>
+	    </mediaobject>
+	  </step>
+
+	  <step>
+	    <title>配置好存储后,我们可以看到自己的存储大小</title>
+	    <mediaobject>
+	      <imageobject><imagedata fileref="images/storage/config-completed.png" format="PNG" /></imageobject>
+	      <textobject><phrase>alternate text goes here</phrase></textobject>
+	    </mediaobject>
+	  </step>
+
+	  <step>
+	    <title>配置虚拟机,使用新的磁盘</title>
+
+	    <procedure>
+	      <step>
+		<title>点击重启虚拟机按钮,重启虚拟机,使配置生效.</title>
+		<para>登录这台虚拟机系统,运行 <command>cat /proc/partitions</command> 命令可以看到系统当前识别的磁盘及分区信息:</para>
+		  <screen>
+[root@localhost ~]# cat /proc/partitions
+major minor #blocks name
+8 16 3145728 sdb
+8 0 3145728 sda
+8 1 2636718 sda1
+8 2 507904 sda2 
+		  </screen>
+	      </step>
+
+	      <step>
+		<title>分区</title>
+		<para>我们看到 <command>8 16 3145728 sdb</command> 这行,可以判断出是我们刚才增加的磁盘(大小 3G, 第二块,还未分区) ,　现在我们用 fdisk 命令对 <command>/dev/sdb</command> 进行分区,我们打算只分一个区:</para>
+		<mediaobject>
+		  <imageobject><imagedata fileref="images/storage/fdisk.png" format="PNG" /></imageobject>
+		  <textobject><phrase>alternate text goes here</phrase></textobject>
+		</mediaobject>
+		<para>现在我们看看分区信息可以看到 <command>/dev/sdb1</command> 的信息了:</para>
+		<screen>
+[root@localhost ~]# cat /proc/partitions
+major minor #blocks name
+8 16 3145728 sdb
+8 17 3140676 sdb1
+8 0 3145728 sda
+8 1 2636718 sda1
+8 2 507904 sda2 
+		</screen>
+	      </step>
+
+	      <step>
+		<title>格式化分区文件系统为 ext3</title>
+		<screen>
+[root@localhost ~]# mkfs.ext3  /dev/sdb1 
+		</screen>
+	      </step>
+
+	      <step>
+		<title>使用分区</title>
+		<para>挂载 (mount) 分区, 并查看当前分区挂载表中新分区的信息:</para>
+		<screen>
+[root@localhost ~]# mount /dev/sdb1 /mnt/
+[root@localhost ~]# df -h
+Filesystem Size Used Avail Use% Mounted on
+/dev/sda1 2.5G 584M 1.8G 25% /
+tmpfs 122M 0 122M 0% /dev/shm
+/dev/sdb1 3.0G 69M 2.8G 3% /mnt
+		</screen>
+		<para>可以看到,我们新分区 <command>/dev/sdb1</command> 信息.我们也能使用这个分区了.</para>
+	      </step>
+	    </procedure>
+
+	  </step>
+
+	</procedure>
+</chapter>
+
